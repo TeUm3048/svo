@@ -1,19 +1,13 @@
 <template>
-    <div>
       <component :v-if="name" :is="name"></component>
-      <i-degree></i-degree>
-      <i-job></i-job>
-      <i-anal></i-anal>
-      <i-vac></i-vac>
-      <slot></slot>
-    </div>
   </template>
-  
+
   <script>
   import iDegree from '@/assets/degree-icon.vue'
   import iJob from '@/assets/job-icon.vue'
   import iAnal from '@/assets/anal-icon.vue'
   import iVac from '@/assets/vacancy-icon.vue'
+  import iClose from '@/assets/close-icon.vue'
 
   export default {
     props: {
@@ -26,11 +20,11 @@
       iDegree,
       iJob,
       iAnal,
-      iVac
+      iVac,
+      iClose
     }
   }
   </script>
-  
-  <style  lang="stylus" scoped>
+
+  <style scoped>
   </style>
-  
