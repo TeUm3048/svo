@@ -1,14 +1,22 @@
 <template>
 <button>
   <slot>
-    Api
   </slot>
+  <icon :v-if="iconName" :name="iconName"></icon>
 </button>
 </template>
 
 <script>
+import Icon from "@/common/Icon";
+
 export default {
-  name: "Button"
+  name: "VButton",
+  props: {
+    iconName: 'iJob'
+  },
+  components: {
+    Icon
+  }
 }
 </script>
 

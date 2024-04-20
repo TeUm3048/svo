@@ -1,0 +1,72 @@
+html {
+    font-size: 16px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', 'Roboto', sans-serif !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html,
+#app {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    height: 100vh;
+    position: relative;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border-collapse: inherit;
+}
+
+
+*:not(body) {
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+:focus,
+:active {
+    outline: none;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+ul, ol, menu {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    outline: none;
+    border: none;
+    background: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+textarea {
+    font: inherit;
+}
+
+input {
+    font: inherit;
+    font-weight: 500;
+    outline: none;
+    border: none;
+}

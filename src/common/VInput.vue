@@ -1,29 +1,39 @@
 <template>
-  <div class="labeled">
-    <p class="named">
-      <slot></slot>
-    </p>
-    <icon :name="iconName"></icon>
+  <div class="wrapper">
+    <labeled-text :iconName="iconName"><slot></slot></labeled-text>
+    <input placeholder="Введите ваше направление" type="text" value="Информационные системы и технологии 09.12.12">
   </div>
-  <slot>
-    Api
-  </slot>
-  <input type="text">
-
 </template>
 
 <script>
-import Icon from '@/common/Icon.vue'
+import LabeledText from '@/common/LabeledText.vue'
 
 export default {
   name: "VInput",
+  data() {
+    return {
+
+    }
+  },
   props: {
     iconName: ''
   },
   components: {
-    Icon
+    LabeledText
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 7px;
+  height: 34px;
+  border: 2px solid #3755FA;
+  font-weight: 200 !important;
+}
+</style>
