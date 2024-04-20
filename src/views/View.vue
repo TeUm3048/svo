@@ -1,88 +1,107 @@
 <template>
   <div class="about">
     <div class="left-section">
-      <div class="left-top">
-        <VInput iconName="iDegree">Направления</VInput>
-        <VInput iconName="iJob">Направления</VInput>
+      <div class="frame left-top">
+        <VInput iconName="iDegree" @input-value-changed="handleDegrees">
+          Направление
+        </VInput>
+        <VInput iconName="iJob" @input-value-changed="handleJobs">
+          Профессия
+        </VInput>
       </div>
-      <div class="left-bottom"></div>
-      <div class="analitycs">
-
+      <div class="frame left-bottom">
+        <Analytics></Analytics>
       </div>
     </div>
-    <div class="right-section">
-
+    <div class="frame right-section">
       <vacancies :vacanciesList="vacanciesList"></vacancies>
-      <button @click="getApi">Поджать апи</button>
+      <button @click="getApi()">Поджать апи</button>
     </div>
-    <api>{{ skills }}</api>
   </div>
 </template>
 <script>
-import Api from "@/components/Api";
 import Button from "@/common/Button";
 import VInput from "@/common/VInput";
 import Vacancies from "@/components/Vacancies";
-import Vacancy from "@/components/Vacancy";
+import Analytics from "@/components/Analytics";
 import ds from "@/plugins/DataService";
+import degreeService from "@/plugins/DegreeService";
 
 export default {
   data() {
     return {
+      vacanciesList: [],
       skills: [],
-      vacanciesList: [{
-        title: 'Инженер-программист микроконтроллеров',
-        salary: '324342',
-        company: 'OOO'}
-      ]
     };
   },
-  props: [],
+  created() {
+    this.getApi();
+  },
   methods: {
-    getApi() {
-      ds.getConsole();
-      ds.getVacancies().then((data) => {
-        this.skills = data;
-      })
+    handleJobs(value) {
+      this.getApi(value);
+    },
+    handleDegrees(value) {
+      this.getApi(value);
+    },
+    getApi(value) {
+      ds.getVacancies(value)
+        .then((data) => {
+          this.vacanciesList = data.results;
+        })
         .catch((e) => {
-          console.log("Не удалось получить данные о вакансиях")
-          console.log(e)
+          console.log("Не удалось получить данные о вакансиях");
+          console.log(e);
         });
     },
+    getSkills(degree) {
+      let data = degreeService.getSkills(degree);
+      this.skills = data;
+    }
   },
   components: {
     Button,
-    Api,
     VInput,
-    Vacancy,
-    Vacancies
+    Vacancies,
+    Analytics
   },
 };
 </script>
 <style scoped>
-.about {
-  margin: 0 auto;
-  max-width: 1000px;
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.left-section {
-  min-width: 656px;
-}
-
-.left-top {
+.frame {
   background: rgba(255, 255, 255, 0.3);
   padding: 20px;
   display: flex;
   flex-direction: column;
+  border-radius: 7px;
+}
+
+.about {
+  margin: 15px auto;
+  padding: 0 15px;
+  max-width: 1000px;
+  height: calc(100vh - 120px);
+  display: flex;
+  gap: 15px;
+}
+
+.left-section {
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.left-top {
   gap: 10px;
 }
 
+.left-bottom {
+  height: 100%
+}
+
 .right-section {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
-  padding: 20px;
+  width: 100%;
+  height: 100%;
 }
 </style>
