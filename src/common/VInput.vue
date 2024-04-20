@@ -1,27 +1,32 @@
 <template>
   <div class="wrapper">
     <labeled-text :iconName="iconName"><slot></slot></labeled-text>
-    <input placeholder="Введите ваше направление" type="text" value="Информационные системы и технологии 09.12.12">
+    <input
+      ref="input"
+      v-model="inputValue"
+      @input="emitInputValue"
+      type="text"
+    />
   </div>
 </template>
 
 <script>
-import LabeledText from '@/common/LabeledText.vue'
+import LabeledText from "@/common/LabeledText.vue";
 
 export default {
   name: "VInput",
-  data() {
-    return {
-
-    }
-  },
   props: {
-    iconName: ''
+    iconName: "",
   },
   components: {
-    LabeledText
-  }
-}
+    LabeledText,
+  },
+  methods: {
+    emitInputValue() {
+      this.$emit('input-value-changed', this.inputValue);
+    }
+  },
+};
 </script>
 
 <style scoped>
@@ -33,7 +38,7 @@ export default {
 input {
   padding: 7px;
   height: 34px;
-  border: 2px solid #3755FA;
+  border: 2px solid #3755fa;
   font-weight: 200 !important;
 }
 </style>

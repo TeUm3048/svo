@@ -3,11 +3,11 @@
   </template>
 
   <script>
-  import iDegree from '@/assets/degree-icon.vue'
-  import iJob from '@/assets/job-icon.vue'
-  import iAnal from '@/assets/anal-icon.vue'
-  import iVac from '@/assets/vacancy-icon.vue'
-  import iClose from '@/assets/close-icon.vue'
+  import iDegree from '@/assets/icons/degree-icon.vue'
+  import iJob from '@/assets/icons/job-icon.vue'
+  import iAnal from '@/assets/icons/anal-icon.vue'
+  import iVac from '@/assets/icons/vacancy-icon.vue'
+  import iClose from '@/assets/icons/close-icon.vue'
 
   export default {
     props: {
