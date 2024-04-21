@@ -5,6 +5,7 @@ interface VacancyStats {
 }
 
 const calcVacancyStats = (vacancies: any[]): VacancyStats => {
+    console.log(vacancies, "Ваааакансииии!!!");
     if (!vacancies) {
         return {
             total: 0,
