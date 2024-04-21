@@ -1,10 +1,11 @@
 <template>
   <div class="wrapper">
     <labeled-text :iconName="iconName"><slot></slot></labeled-text>
-    <input
+    <auto-complete
       ref="input"
       v-model="inputValue"
-      @input="emitInputValue"
+      :suggestions="items"
+      @complete="emitInputValue"
       type="text"
     />
   </div>
@@ -12,19 +13,27 @@
 
 <script>
 import LabeledText from "@/common/LabeledText.vue";
+import AutoComplete from "primevue/autocomplete";
 
 export default {
-  name: "VInput",
+  name: "SuperInput",
   props: {
     iconName: "",
+    suggestionsList: []
   },
   components: {
     LabeledText,
+    AutoComplete
+  },
+  computed: {
+    items () {
+      return [...this.suggestionsList]
+    }
   },
   methods: {
     emitInputValue() {
-      this.$emit('input-value-changed', this.inputValue);
-    }
+      this.$emit("input-value-changed", this.inputValue);
+    },
   },
 };
 </script>

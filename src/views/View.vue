@@ -2,9 +2,9 @@
   <div class="about">
     <div class="left-section">
       <div class="frame left-top">
-        <VInput iconName="iDegree" @input-value-changed="handleDegrees">
+        <super-input :suggestionsList="vacanciesList" iconName="iDegree" @input-value-changed="handleDegrees">
           Направление
-        </VInput>
+        </super-input>
         <VInput iconName="iJob" @input-value-changed="handleJobs">
           Профессия
         </VInput>
@@ -15,7 +15,7 @@
     </div>
     <div class="frame right-section">
       <vacancies :vacanciesList="vacanciesList"></vacancies>
-      <button @click="getApi()">Поджать апи</button>
+      <button @click="getSkills()">Поджать апи</button>
     </div>
   </div>
 </template>
@@ -26,11 +26,12 @@ import Vacancies from "@/components/Vacancies";
 import Analytics from "@/components/Analytics";
 import ds from "@/plugins/DataService";
 import degreeService from "@/plugins/DegreeService";
+import SuperInput from "@/common/SuperInput";
 
 export default {
   data() {
     return {
-      vacanciesList: [],
+      vacanciesList: new Array(),
       skills: [],
     };
   },
@@ -42,10 +43,36 @@ export default {
       this.getApi(value);
     },
     handleDegrees(value) {
-      this.getApi(value);
+      if (!value) {
+        this.refreshVacancies();
+      }
+      this.getSkills(value);
+      this.getApi(this.skills);
     },
-    getApi(value) {
-      ds.getVacancies(value)
+    getApi(valueList) {
+      if (!valueList) return;
+      valueList.map((v) => {
+        ds.getVacancies(v)
+          .then((data) => {
+            this.vacanciesList = [...this.vacanciesList, ...data.results];
+            if (data.next) {
+              console.log(results);
+              const nextResults = this.getApi(data.next);
+              this.vacanciesList = this.vacanciesList.concat(nextResults);
+            } else {
+              // Если следующей страницы нет, возвращаем текущие результаты
+              return results;
+            }
+          })
+          .catch((e) => {
+            console.log("Не удалось получить данные о вакансиях");
+            console.log(e);
+          });
+      });
+    },
+    refreshVacancies() {
+      this.skills = new Array();
+      ds.getVacancies()
         .then((data) => {
           this.vacanciesList = data.results;
         })
@@ -54,16 +81,21 @@ export default {
           console.log(e);
         });
     },
-    getSkills(degree) {
-      let data = degreeService.getSkills(degree);
-      this.skills = data;
-    }
+    getSkills(value) {
+      let data = degreeService.getSkills(value);
+      console.log("ДАта", data);
+      if (data) {
+        this.skills = data;
+      }
+      console.log(this.skills);
+    },
   },
   components: {
     Button,
     VInput,
     Vacancies,
-    Analytics
+    Analytics,
+    SuperInput,
   },
 };
 </script>
@@ -97,7 +129,7 @@ export default {
 }
 
 .left-bottom {
-  height: 100%
+  height: 100%;
 }
 
 .right-section {

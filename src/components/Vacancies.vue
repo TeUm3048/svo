@@ -42,7 +42,7 @@ export default {
       return this.vacanciesList.filter((value, index, self) => {
         return  self.findIndex((t) => t.name === value.name && t.job === value.job && t.salary === value.salary) === index;
       })
-    },
+    }
   },
   components: {
     Vacancy,
@@ -81,11 +81,9 @@ export default {
   width: 0;
 }
 
-.vacancy__list {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.vacancy__list  {
+  margin-top: 5px;
 }
+
 
 </style>

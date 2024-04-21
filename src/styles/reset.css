@@ -3,7 +3,7 @@ html,
 #app {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 600;
+    font-weight: 400;
     font-style: normal;
     height: 100vh;
     position: relative;
@@ -14,7 +14,6 @@ html,
     padding: 0;
     border-collapse: inherit;
 }
-
 
 *:not(body) {
     background-repeat: no-repeat;
@@ -59,7 +58,11 @@ textarea {
 
 input {
     font: inherit;
-    font-weight: 500;
+    text-decoration: none;
     outline: none;
     border: none;
+}
+
+p{
+    filter:invert(21deg)
 }
