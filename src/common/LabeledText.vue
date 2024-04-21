@@ -26,6 +26,6 @@ export default {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 9px;
+  padding: 8px 5px;
 }
 </style>
