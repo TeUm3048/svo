@@ -1,10 +1,10 @@
 <template>
-  <Bar id="my-chart-id" :data="chartData" :options="chartOptions" />
+  <Bar ref="bar" id="my-chart-id" :data="chartData" :options="chartOptions" />
 </template>
 
 <script>
 import { Bar } from "vue-chartjs";
-import { Colors } from 'chart.js';
+import { Colors } from "chart.js";
 
 import {
   Chart as ChartJS,
@@ -29,7 +29,6 @@ ChartJS.register(
 ChartJS.defaults.backgroundColor = "#000";
 ChartJS.defaults.borderColor = "#000";
 ChartJS.defaults.color = "#000";
-
 
 export default {
   name: "Analytics",
@@ -58,7 +57,8 @@ export default {
         labels: this.dataset.labels,
         datasets: [
           {
-            backgroundColor: '#3755FA',
+            label: "Данные о зароботной плате",
+            backgroundColor: "#3755FA",
             barPercentage: 0.9,
             barThickness: 400,
             maxBarThickness: 60,
@@ -79,11 +79,21 @@ export default {
   },
   methods: {
     updateChartData(newVal) {
-      this.chartData.labels = newVal.labels;
-      this.chartData.datasets[0].data = newVal.values;
-      this.$nextTick(() => {
-        // this.renderChart()
-      });
+      console.log(newVal);
+      this.chartData = {
+        labels: newVal.labels,
+        datasets: [
+          {
+            label: "Данные о зароботной плате",
+            backgroundColor: "#3755FA",
+            barPercentage: 0.9,
+            barThickness: 200,
+            maxBarThickness: 60,
+            minBarLength: 4,
+            data: newVal.values,
+          },
+        ],
+      };
     },
   },
 };

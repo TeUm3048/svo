@@ -68,7 +68,7 @@ export default {
     handleDegrees(value) {
       console.log(value);
       this.degreeValue = value;
-
+this.getSkills(value);
       this.getApi();
     },
     updateDataset() {
@@ -78,10 +78,10 @@ export default {
     getApi() {
       this.getSkills(this.degreeValue);
 
-      if (!this.skills || !this.jobValue) {
-        this.refreshVacancies();
-        return;
-      }
+      // if (!this.skills || !this.jobValue) {
+      //   this.refreshVacancies();
+      //   return;
+      // }
       let valueList;
       if (this.skills && this.skills.length === 0) {
         valueList = [this.jobValue];
@@ -116,6 +116,7 @@ export default {
         });
     },
     refreshVacancies() {
+      this.vacanciesList = new Array();
       this.skills = new Array();
       ds.getVacancies()
         .then((data) => {
@@ -131,9 +132,7 @@ export default {
     getSkills(value) {
       let data = degreeService.getSkills(value);
       console.log("ДАта", data);
-      if (data) {
-        this.skills = data;
-      }
+      this.skills = data || [];
       console.log(this.skills);
     },
     getDegrees() {
@@ -182,6 +181,7 @@ export default {
 
 .left-bottom {
   height: 100%;
+  overflowX: hidden;
 }
 
 .right-section {
