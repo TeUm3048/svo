@@ -54,7 +54,6 @@ export default {
   },
   created() {
     this.refreshVacancies();
-    this.updateDataset();
     this.getDegrees();
   },
 
@@ -67,10 +66,9 @@ export default {
     },
 
     handleDegrees(value) {
+      console.log(value);
       this.degreeValue = value;
-      if (!value) {
-        this.refreshVacancies();
-      }
+
       this.getApi();
     },
     updateDataset() {
@@ -80,24 +78,28 @@ export default {
     getApi() {
       this.getSkills(this.degreeValue);
 
-      if (!this.skills || !this.jobValue) return;
+      if (!this.skills || !this.jobValue) {
+        this.refreshVacancies();
+        return;
+      }
       let valueList;
-      if (!this.skills && this.skills.length === 0) {
+      if (this.skills && this.skills.length === 0) {
         valueList = [this.jobValue];
       } else {
         valueList = this.skills.map((s) => `${s} ${this.jobValue}`);
       }
+      console.log(valueList, "Новая дататат");
 
       valueList.map((v) => {
         this.getAllVacancies(v);
       });
     },
     getAllVacancies(v, page = 1) {
+      this.vacanciesList = new Array();
       ds.getVacancies(v, page)
         .then((data) => {
           this.vacanciesList.push(...data.results);
           this.updateDataset();
-
 
           if (data.next) {
             console.log(results);
@@ -124,6 +126,7 @@ export default {
           console.log("Не удалось получить данные о вакансиях");
           console.log(e);
         });
+      this.updateDataset();
     },
     getSkills(value) {
       let data = degreeService.getSkills(value);

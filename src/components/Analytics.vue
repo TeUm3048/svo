@@ -59,7 +59,6 @@ export default {
         datasets: [
           {
             backgroundColor: '#3755FA',
-            label: null,
             barPercentage: 0.9,
             barThickness: 400,
             maxBarThickness: 60,
@@ -83,7 +82,7 @@ export default {
       this.chartData.labels = newVal.labels;
       this.chartData.datasets[0].data = newVal.values;
       this.$nextTick(() => {
-        this.renderChart()
+        // this.renderChart()
       });
     },
   },
