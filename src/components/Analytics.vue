@@ -1,62 +1,74 @@
 <template>
-  <labeled-text iconName="iAnal">Анализ</labeled-text>
-  <Bar
-      id="my-chart-id"
-      :options="chartOptions"
-      :data="chartData"
-  />
+  <Bar id="my-chart-id" :data="chartData" :options="chartOptions" />
 </template>
 
 <script>
-import LabeledText from "@/common/LabeledText"
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+import { Bar } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 
-import gsap from "gsap"
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
+
+ChartJS.defaults.backgroundColor = "#9BD0F5";
+ChartJS.defaults.borderColor = "#36A2EB";
+ChartJS.defaults.color = "#000";
+
 export default {
   name: "Analytics",
-  // props: {
-  //   chartData: {
-  //     type: Object,
-  //     required: true
-  //   },
-  //   chartOptions: {
-  //     type: Object,
-  //     default: () => {}
-  //   }
-  // },
+  props: {
+    dataset: {
+      type: Object,
+      default: () => ({
+        labels: [],
+        values: [],
+      }),
+    },
+  },
   data() {
     return {
-      chartData: {
-        labels: [ 'January', 'February', 'March' ],
-        datasets: [ {
-          backgroundColor: '#ffffff',
-          label: '',
-          barPercentage: 0.7,
-          barThickness: 200,
-          maxBarThickness: 40,
-          minBarLength: 4,
-          data: [10, 20, 30, 40, 50, 60, 70]
-          }
-        ]
-      },
       chartOptions: {
-        responsive: true
-      }
-    }
+        responsive: true,
+
+      },
+    };
   },
-  // computed: {
-  //   chartData() { return /* mutable chart data */ },
-  //   chartOptions() { return /* mutable chart options */ }
-  // },
+  computed: {
+    chartData() {
+      return {
+        labels: this.dataset.labels,
+        datasets: [
+          {
+            backgroundColor: "magenta",
+            label: null,
+            barPercentage: 0.7,
+            barThickness: 200,
+            maxBarThickness: 40,
+            minBarLength: 4,
+            data: this.dataset.values,
+          },
+        ],
+      };
+    },
+  },
   components: {
-    LabeledText,
-    Bar
-  }
-}
+    Bar,
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

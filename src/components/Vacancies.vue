@@ -1,26 +1,27 @@
 <template>
-<!--  <div class="vacancy__wrapper">-->
-    <labeled-text iconName="iVac">Вакансии</labeled-text>
-    <transition-group  @before-enter="onBeforeEnter"
-                       @enter="onEnter"
-                       @leave="onLeave"
-                       name="list"
-                       tag="ul"
-                       class="vacancy__list">
-      <vacancy v-for="job in vacList" :key="job.id">
-        <template v-if="job.name" #vacTitle>{{ job.name }}</template>
-        <template v-if="job.salaryFrom && job.salaryUpTo" #vacSalary>{{
+  <labeled-text iconName="iVac">Вакансии</labeled-text>
+  <transition-group class="vacancy__list"
+                    name="list"
+                    tag="ul"
+                    @enter="onEnter"
+                    @leave="onLeave"
+                    @before-enter="onBeforeEnter">
+    <vacancy v-for="job in vacList" :key="job.id">
+      <template v-if="job.name" #vacTitle>{{ job.name }}</template>
+      <template v-if="job.salaryFrom && job.salaryUpTo" #vacSalary>{{
           job.salaryFrom + " — " + job.salaryUpTo
-        }}</template>
-        <template v-else #vacSalary>{{
+        }}
+      </template>
+      <template v-else #vacSalary>{{
           job.salaryFrom || job.salaryUpTo
-        }}</template>
-        <template v-if="job.organization.name" #vacCompany>{{
+        }}
+      </template>
+      <template v-if="job.organization.name" #vacCompany>{{
           job.organization.name
-        }}</template>
-      </vacancy>
-    </transition-group>
-<!--  </div>-->
+        }}
+      </template>
+    </vacancy>
+  </transition-group>
 </template>
 <script>
 import Vacancy from "@/components/Vacancy"
@@ -40,7 +41,7 @@ export default {
   computed: {
     vacList() {
       return this.vacanciesList.filter((value, index, self) => {
-        return  self.findIndex((t) => t.name === value.name && t.job === value.job && t.salary === value.salary) === index;
+        return self.findIndex((t) => t.name === value.name && t.job === value.job && t.salary === value.salary) === index;
       })
     }
   },
@@ -63,7 +64,7 @@ export default {
     },
     onLeave(element, done) {
       gsap.to(element, {
-        left:0,
+        left: 0,
         opacity: 0,
         onComplete: done,
       });
@@ -81,7 +82,7 @@ export default {
   width: 0;
 }
 
-.vacancy__list  {
+.vacancy__list {
   margin-top: 5px;
 }
 

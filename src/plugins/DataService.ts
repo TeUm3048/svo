@@ -35,7 +35,34 @@ export const ds = {
                 console.log(e);
                 return Promise.reject(e);
             })
+    },
+    async getAllVacancies(value: string) {
+        const url = `/vacancy/?search=${value ? value : ''}&sort=-updatedAt`;
+        fetchAllPages(url)
+            .then((allResults) => {
+                return allResults;
+            })
+            .catch((error) => {
+                console.error("Ошибка при выполнении запроса:", error);
+            });
+    }
+}
 
+async function fetchAllPages(url: string): Promise<any> {
+    try {
+        const response = await api.get(url);
+        const data = response.data;
+        const results = data.results;
+        console.log(data.next);
+        // Если есть следующая страница, рекурсивно вызываем функцию
+        if (data.next) {
+            console.log(results);
+            const nextResults = await fetchAllPages(data.next);
+            results.push(...nextResults); // Add nextResults to the results array
+        }
+        return results; // Return the modified results array
+    } catch (error) {
+        console.error("Ошибка при выполнении запроса:", error);
     }
 }
 

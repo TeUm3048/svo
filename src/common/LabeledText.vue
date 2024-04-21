@@ -9,12 +9,13 @@
 
 <script>
 import Icon from '@/common/Icon.vue'
+
 export default {
   name: "LabeledText",
   props: {
     iconName: 'IDegree'
   },
-  components:{
+  components: {
     Icon
   }
 }
@@ -22,10 +23,10 @@ export default {
 
 <style scoped>
 .labeled {
-  height: 34px;
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 5px;
+  height: 34px;
   padding: 8px 5px;
 }
 </style>

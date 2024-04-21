@@ -1,68 +1,69 @@
 body,
 html,
 #app {
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    height: 100vh;
-    position: relative;
+	font-family: "Montserrat", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	font-weight: 400;
+	height: 100vh;
+	position: relative;
+	overflowY: hidden;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    border-collapse: inherit;
+	border-collapse: inherit;
+	margin: 0;
+	padding: 0;
 }
 
 *:not(body) {
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: cover;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 *, *:before, *:after {
-    box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 :focus,
 :active {
-    outline: none;
+	outline: none;
 }
 
 [hidden] {
-    display: none !important;
+	display: none !important;
 }
 
 ul, ol, menu {
-    list-style: none;
+	list-style: none;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 button {
-    font: inherit;
-    outline: none;
-    border: none;
-    background: none;
-    text-decoration: none;
-    cursor: pointer;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font: inherit;
+	outline: none;
+	text-decoration: none;
 }
 
 textarea {
-    font: inherit;
+	font: inherit;
 }
 
 input {
-    font: inherit;
-    text-decoration: none;
-    outline: none;
-    border: none;
+	border: none;
+	font: inherit;
+	outline: none;
+	text-decoration: none;
 }
 
-p{
-    filter:invert(21deg)
+p {
+	filter: invert(21deg)
 }
