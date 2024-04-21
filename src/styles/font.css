@@ -5,9 +5,10 @@
 /*	font-style: normal;*/
 /*}*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;1,600&display=swap');
+
 html {
-	font-size: 18px;
 	box-sizing: border-box;
 	font-family: 'Montserrat', 'Roboto', sans-serif !important;
+	font-size: 18px;
 	-webkit-tap-highlight-color: transparent;
 }

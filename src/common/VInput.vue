@@ -4,7 +4,7 @@
     <input
       ref="input"
       v-model="inputValue"
-      @input="emitInputValue"
+      @change="emitInputValue"
       type="text"
     />
   </div>
@@ -14,6 +14,11 @@
 import LabeledText from "@/common/LabeledText.vue";
 
 export default {
+  data () {
+    return {
+      inputValue: ''
+    }
+  },
   name: "VInput",
   props: {
     iconName: "",
@@ -26,7 +31,7 @@ export default {
       this.$emit('input-value-changed', this.inputValue);
     }
   },
-};
+}
 </script>
 
 <style scoped>
@@ -36,6 +41,8 @@ export default {
 }
 
 input {
+  border-radius: 5px;
+  font-size: 16px;
   padding: 7px;
   height: 34px;
   border: 2px solid #3755fa;

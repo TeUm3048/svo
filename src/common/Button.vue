@@ -1,9 +1,8 @@
 <template>
-<button>
-  <slot>
-  </slot>
-  <icon :v-if="iconName" :name="iconName"></icon>
-</button>
+  <button>
+    <slot/>
+    <icon :name="iconName" :v-if="iconName"></icon>
+  </button>
 </template>
 
 <script>
