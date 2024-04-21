@@ -4,6 +4,8 @@
 
 <script>
 import { Bar } from "vue-chartjs";
+import { Colors } from 'chart.js';
+
 import {
   Chart as ChartJS,
   Title,
@@ -15,6 +17,7 @@ import {
 } from "chart.js";
 
 ChartJS.register(
+  Colors,
   Title,
   Tooltip,
   Legend,
@@ -23,9 +26,10 @@ ChartJS.register(
   LinearScale
 );
 
-ChartJS.defaults.backgroundColor = "#9BD0F5";
-ChartJS.defaults.borderColor = "#36A2EB";
+ChartJS.defaults.backgroundColor = "#000";
+ChartJS.defaults.borderColor = "#000";
 ChartJS.defaults.color = "#000";
+
 
 export default {
   name: "Analytics",
@@ -42,9 +46,11 @@ export default {
     return {
       chartOptions: {
         responsive: true,
-
       },
     };
+  },
+  components: {
+    Bar,
   },
   computed: {
     chartData() {
@@ -52,11 +58,11 @@ export default {
         labels: this.dataset.labels,
         datasets: [
           {
-            backgroundColor: "magenta",
+            backgroundColor: '#3755FA',
             label: null,
-            barPercentage: 0.7,
-            barThickness: 200,
-            maxBarThickness: 40,
+            barPercentage: 0.9,
+            barThickness: 400,
+            maxBarThickness: 60,
             minBarLength: 4,
             data: this.dataset.values,
           },
@@ -64,8 +70,22 @@ export default {
       };
     },
   },
-  components: {
-    Bar,
+  watch: {
+    dataset: {
+      handler(newVal) {
+        this.updateChartData(newVal);
+      },
+      deep: true,
+    },
+  },
+  methods: {
+    updateChartData(newVal) {
+      this.chartData.labels = newVal.labels;
+      this.chartData.datasets[0].data = newVal.values;
+      this.$nextTick(() => {
+        this.renderChart()
+      });
+    },
   },
 };
 </script>

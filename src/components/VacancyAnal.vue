@@ -3,7 +3,7 @@
 </template>
 <script>
 import Analytics from "@/components/Analytics.vue";
-import calcVacancyStats  from "@/utils/calcVacancyStats.ts";
+import calcVacancyStats from "@/utils/calcVacancyStats.ts";
 
 export default {
   name: "VacancyAnal",

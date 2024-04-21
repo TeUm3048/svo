@@ -15,8 +15,8 @@
       </div>
       <div class="frame left-bottom">
         <labeled-text iconName="iAnal">Анализ</labeled-text>
-        <!-- <Analytics :dataset="{ values: [13], labels: ['xui'] }"></Analytics> -->
-        <vacancy-anal :vacancyList="vacanciesList"></vacancy-anal>
+        <Analytics :dataset="dataset"></Analytics>
+        <!-- <vacancy-anal :vacancyList="vacanciesList"></vacancy-anal> -->
       </div>
     </div>
     <div class="frame right-section">
@@ -35,6 +35,7 @@ import ds from "@/plugins/DataService";
 import degreeService from "@/plugins/DegreeService";
 import SuperInput from "@/common/SuperInput";
 import VacancyAnal from "@/components/VacancyAnal";
+import calcVacancyStats from "@/utils/calcVacancyStats";
 
 export default {
   data() {
@@ -44,18 +45,25 @@ export default {
       degreeList: new Array(),
       jobValue: "",
       degreeValue: "",
+      dataset: {
+        labels: [],
+        values: [],
+        total: 0,
+      },
     };
   },
   created() {
-    this.getApi();
+    this.refreshVacancies();
+    this.updateDataset();
     this.getDegrees();
   },
+
   methods: {
     handle() {},
     handleJobs(value) {
       console.log(value);
       this.jobValue = value;
-      this.getApi([value]);
+      this.getApi();
     },
 
     handleDegrees(value) {
@@ -65,7 +73,10 @@ export default {
       }
       this.getApi();
     },
-
+    updateDataset() {
+      let data = calcVacancyStats(this.vacanciesList);
+      this.dataset = data;
+    },
     getApi() {
       this.getSkills(this.degreeValue);
 
@@ -85,11 +96,14 @@ export default {
       ds.getVacancies(v, page)
         .then((data) => {
           this.vacanciesList.push(...data.results);
+          this.updateDataset();
+
 
           if (data.next) {
             console.log(results);
             let nextResults = this.getAllVacancies(v, data.next);
             this.vacanciesList.push(...nextResults);
+            this.updateDataset();
           } else {
             return;
           }
@@ -104,6 +118,7 @@ export default {
       ds.getVacancies()
         .then((data) => {
           this.vacanciesList = data.results;
+          this.updateDataset();
         })
         .catch((e) => {
           console.log("Не удалось получить данные о вакансиях");
@@ -147,7 +162,7 @@ export default {
   gap: 15px;
   height: calc(100vh - 120px);
   margin: 15px auto;
-  max-width: 1000px;
+  max-width: 1200px;
   padding: 0 15px;
 }
 
@@ -155,7 +170,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  min-width: 500px;
+  min-width: 600px;
 }
 
 .left-top {
