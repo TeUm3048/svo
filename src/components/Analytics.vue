@@ -57,12 +57,12 @@ export default {
         labels: this.dataset.labels,
         datasets: [
           {
-            label: "Данные о зароботной плате",
+            label: "Данные о заработной плате",
+            font: 'Montserrat',
             backgroundColor: "#3755FA",
             barPercentage: 0.9,
-            barThickness: 400,
-            maxBarThickness: 60,
-            minBarLength: 4,
+            barThickness: 20,
+            maxBarLength: 20,
             data: this.dataset.values,
           },
         ],
@@ -84,7 +84,7 @@ export default {
         labels: newVal.labels,
         datasets: [
           {
-            label: "Данные о зароботной плате",
+            label: "Данные о заработной плате",
             backgroundColor: "#3755FA",
             barPercentage: 0.9,
             barThickness: 200,

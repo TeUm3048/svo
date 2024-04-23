@@ -24,8 +24,8 @@
       vButton
     },
     methods: {
-      changeSite () {
-        this.showImg = this.showImg ? false: true
+      changeSite: function () {
+        this.showImg = !this.showImg
       }
     }
   }
@@ -52,10 +52,6 @@
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   background-image: url("assets/img/background.png");
   color: #2c3e50;
 }
@@ -83,7 +79,6 @@ nav {
 
 nav a {
   font-weight: bold;
-  /*color: #42b983;*/
   color: #3755fa;
 }
 

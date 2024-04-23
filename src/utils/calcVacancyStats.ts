@@ -5,7 +5,6 @@ interface VacancyStats {
 }
 
 const calcVacancyStats = (vacancies: any[]): VacancyStats => {
-    console.log(vacancies, "Ваааакансииии!!!");
     if (!vacancies) {
         return {
             total: 0,
@@ -21,13 +20,17 @@ const calcVacancyStats = (vacancies: any[]): VacancyStats => {
             return self.findIndex((t) => t.name === value.name && t.job === value.job && t.salary === value.salary) === index;
         })
 
-
     const values = filtered.map(vacancy => {
         const from = vacancy.salaryFrom || 0;
         const upTo = vacancy.salaryUpTo || 0;
         return (from + upTo) / 2;
     });
-    const labels = filtered.map(vacancy => vacancy.name);
+    const labels = filtered.map(vacancy => vacancy.name).map(label => {
+        if (label.length > 20) {
+            return label.substring(0, 20) + '..';
+        }
+        return label;
+    });
 
     return {
         total,

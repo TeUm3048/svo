@@ -46,7 +46,7 @@ input {
   padding: 7px;
   height: 34px;
   border: 2px solid #3755fa;
+  width: calc(100% - 30px);
   background: rgba(255, 255, 255, 0.3);
-  font-weight: 200 !important;
 }
 </style>

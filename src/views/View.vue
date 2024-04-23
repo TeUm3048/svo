@@ -3,9 +3,9 @@
     <div class="left-section">
       <div class="frame left-top">
         <SuperInput
-          :suggestions="degreeList"
-          iconName="iDegree"
-          @input-value-changed="handleDegrees"
+            :suggestions="degreeList"
+            iconName="iDegree"
+            @input-value-changed="handleDegrees"
         >
           Направление
         </SuperInput>
@@ -16,12 +16,11 @@
       <div class="frame left-bottom">
         <labeled-text iconName="iAnal">Анализ</labeled-text>
         <Analytics :dataset="dataset"></Analytics>
-        <!-- <vacancy-anal :vacancyList="vacanciesList"></vacancy-anal> -->
+<!--         <vacancy-anal :vacancyList="vacanciesList"></vacancy-anal>-->
       </div>
     </div>
     <div class="frame right-section">
       <vacancies :vacanciesList="vacanciesList"></vacancies>
-      <!-- <button @click="getApi()">Поджать апи</button> -->
     </div>
   </div>
 </template>
@@ -40,9 +39,9 @@ import calcVacancyStats from "@/utils/calcVacancyStats";
 export default {
   data() {
     return {
-      vacanciesList: new Array(),
+      vacanciesList: [],
       skills: [],
-      degreeList: new Array(),
+      degreeList: [],
       jobValue: "",
       degreeValue: "",
       dataset: {
@@ -58,7 +57,8 @@ export default {
   },
 
   methods: {
-    handle() {},
+    handle() {
+    },
     handleJobs(value) {
       console.log(value);
       this.jobValue = value;
@@ -68,70 +68,62 @@ export default {
     handleDegrees(value) {
       console.log(value);
       this.degreeValue = value;
-this.getSkills(value);
+      this.getSkills(value);
       this.getApi();
     },
     updateDataset() {
-      let data = calcVacancyStats(this.vacanciesList);
-      this.dataset = data;
+      this.dataset = calcVacancyStats(this.vacanciesList);
     },
     getApi() {
       this.getSkills(this.degreeValue);
-
-      // if (!this.skills || !this.jobValue) {
-      //   this.refreshVacancies();
-      //   return;
-      // }
       let valueList;
       if (this.skills && this.skills.length === 0) {
         valueList = [this.jobValue];
       } else {
         valueList = this.skills.map((s) => `${s} ${this.jobValue}`);
       }
-      console.log(valueList, "Новая дататат");
 
       valueList.map((v) => {
         this.getAllVacancies(v);
       });
     },
     getAllVacancies(v, page = 1) {
-      this.vacanciesList = new Array();
+      this.vacanciesList = [];
       ds.getVacancies(v, page)
-        .then((data) => {
-          this.vacanciesList.push(...data.results);
-          this.updateDataset();
-
-          if (data.next) {
-            console.log(results);
-            let nextResults = this.getAllVacancies(v, data.next);
-            this.vacanciesList.push(...nextResults);
+          .then((data) => {
+            this.vacanciesList.push(...data.results);
             this.updateDataset();
-          } else {
-            return;
-          }
-        })
-        .catch((e) => {
-          console.log("Не удалось получить данные о вакансиях");
-          console.log(e);
-        });
+
+            if (data.next) {
+              console.log(results);
+              let nextResults = this.getAllVacancies(v, data.next);
+              this.vacanciesList.push(...nextResults);
+              this.updateDataset();
+            } else {
+                return;
+            }
+          })
+          .catch((e) => {
+            console.log("Не удалось получить данные о вакансиях");
+            console.log(e);
+          });
     },
     refreshVacancies() {
-      this.vacanciesList = new Array();
-      this.skills = new Array();
+      this.vacanciesList = [];
+      this.skills = [];
       ds.getVacancies()
-        .then((data) => {
-          this.vacanciesList = data.results;
-          this.updateDataset();
-        })
-        .catch((e) => {
-          console.log("Не удалось получить данные о вакансиях");
-          console.log(e);
-        });
+          .then((data) => {
+            this.vacanciesList = data.results;
+            this.updateDataset();
+          })
+          .catch((e) => {
+            console.log("Не удалось получить данные о вакансиях");
+            console.log(e);
+          });
       this.updateDataset();
     },
     getSkills(value) {
       let data = degreeService.getSkills(value);
-      console.log("ДАта", data);
       this.skills = data || [];
       console.log(this.skills);
     },
